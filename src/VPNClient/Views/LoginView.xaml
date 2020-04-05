@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="VPNClient.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="780" d:DesignWidth="1460">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/login-background.png" Stretch="UniformToFill" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="345" />
+            <RowDefinition Height="75" />
+            <RowDefinition Height="75" />
+            <RowDefinition Height="75" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Style="{StaticResource LoginViewLogo}">
+            <Image Source="/Assets/Images/logo-white.png" Width="246" Height="64" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Style="{StaticResource ResourceKey=LoginInputStackPanelStyle}">
+            <Border Style="{StaticResource ResourceKey=LoginInputBorderStyle}">
+                <DockPanel Margin="5">
+                    <Image Source="/Assets/Images/ico-username.png" Style="{StaticResource ResourceKey=LoginInputIconStyle}" />
+                    <TextBox x:Name="tbxUsername" Style="{StaticResource LoginTextBoxStyle}" Text="" />
+                </DockPanel>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Style="{StaticResource ResourceKey=LoginInputStackPanelStyle}">
+            <Border Style="{StaticResource ResourceKey=LoginInputBorderStyle}" >
+                <DockPanel Margin="5">
+                    <Image Source="/Assets/Images/ico-lock.png" Style="{StaticResource ResourceKey=LoginInputIconStyle}" />
+                    <PasswordBox x:Name="pbxPassword" 
+                                 Style="{StaticResource ResourceKey=LoginPasswordBoxStyle}" 
+                                 PasswordChanged="PasswordBox_PasswordChanged" />
+                </DockPanel>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Style="{StaticResource ResourceKey=LoginInputStackPanelStyle}">
+            <Button x:Name="Login" Style="{StaticResource ResourceKey=LoginButton}" />
+        </StackPanel>
+        <StackPanel Grid.Row="4" HorizontalAlignment="Center" Margin="0">
+            <iconPacks:PackIconFontAwesome Name="Spinner" 
+                                           Width="32"
+                                           Height="32" 
+                                           Spin="True"  
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Kind="SpinnerSolid"
+                                           Foreground="#9fd533" 
+                                           Visibility="Visible" />
+            <TextBlock x:Name="Message" Text="" Foreground="Red" />
+        </StackPanel>
+    </Grid>
+</UserControl>

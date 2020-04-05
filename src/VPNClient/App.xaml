@@ -1,0 +1,348 @@
+﻿<Application x:Class="VPNClient.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:VPNClient"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <FontFamily x:Key="Roboto">pack://application:,,,/Assets/Fonts/#Roboto</FontFamily>
+
+        <Style TargetType="StackPanel" x:Key="LoginViewLogo" >
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,228,0,0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        
+        <Style x:Key="LoginTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Foreground" Value="#999" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="FontFamily" Value="Roboto" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Width" Value="300" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer VerticalAlignment="Center" 
+                                          Background="{TemplateBinding Background}" 
+                                          Foreground="{TemplateBinding Foreground}" 
+                                          x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Resources>
+                            <VisualBrush x:Key="UserNameBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                <VisualBrush.Visual>
+                                    <Label Content="Username" 
+                                           Foreground="#b2b2b2" 
+                                           FontFamily="Roboto" 
+                                           FontWeight="Light"
+                                           FontSize="16" 
+                                           Padding="0,2,0,0" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </ControlTemplate.Resources>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                <Setter Property="Background" Value="{StaticResource UserNameBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource UserNameBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="Background" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LoginPasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Foreground" Value="#999" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="Roboto" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Width" Value="300" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer VerticalAlignment="Center" 
+                                          Background="{TemplateBinding Background}" 
+                                          Foreground="{TemplateBinding Foreground}" 
+                                          x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Resources>
+                            <VisualBrush x:Key="PasswordNameBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                <VisualBrush.Visual>
+                                    <Label Content="Password" 
+                                           Foreground="#b2b2b2" 
+                                           FontFamily="Roboto" 
+                                           FontWeight="Light"
+                                           FontSize="16" 
+                                           Padding="0,2,0,0" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </ControlTemplate.Resources>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Path=Password}" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource PasswordNameBannerBrush}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Password}" Value="{x:Static sys:String.Empty}">
+                                <Setter Property="Background" Value="{StaticResource PasswordNameBannerBrush}" />
+                            </DataTrigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="Background" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LoginInputIconStyle" TargetType="Image">
+            <Setter Property="Width" Value="14" />
+            <Setter Property="Margin" Value="8,0,12,2" />
+        </Style>
+
+        <Style x:Key="LoginInputBorderStyle" TargetType="Border">
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="White" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="CornerRadius" Value="5" />
+        </Style>
+
+        <Style x:Key="LoginInputStackPanelStyle" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="LoginButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Background" Value="#9fd533" />
+            <Setter Property="Width" Value="370" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="FontFamily" Value="Roboto" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="borderZero" 
+                                BorderThickness="0" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              Content="Log In" 
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#86b300" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ListBorderHeaderText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#999999" />
+            <Setter Property="FontSize" Value="14pt" />
+            <Setter Property="FontFamily" Value="Roboto" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Height" Value="20px" />
+            <Setter Property="Margin" Value="50, 18, 50, 0" />
+        </Style>
+        
+        <Style x:Key="ListBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#e6e6e6" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        
+        <Style x:Key="ListBoxStyle" TargetType="ListBox">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="false" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+            <Setter Property="MaxWidth" Value="730" />
+            <Setter Property="MinHeight" Value="300" />
+            <Setter Property="Background" Value="#e6e6e6" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#666666"/>
+            <Setter Property="FontSize" Value="16pt"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="FontFamily" Value="Roboto"/>
+            <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="#666666" />
+            <Setter Property="Margin" Value="0,0,0,1" />
+        </Style>
+
+        <Style x:Key="ScrollBarTrackThumb" TargetType="{x:Type Thumb}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Grid x:Name="Grid">
+                            <Rectangle HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       Width="Auto"
+                                       Height="Auto"
+                                       Fill="Transparent" />
+                            <Border x:Name="CornerScrollBarRectangle"
+                                    CornerRadius="5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Width="Auto"
+                                    Height="Auto"
+                                    Margin="0,1,0,1"
+                                    Background="{TemplateBinding Background}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Horizontal">
+                                <Setter TargetName="CornerScrollBarRectangle" Property="Width" Value="Auto" />
+                                <Setter TargetName="CornerScrollBarRectangle" Property="Height" Value="2" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type ScrollBar}">
+            <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+            <Setter Property="Foreground" Value="#ADABAB" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Width" Value="7" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid x:Name="GridRoot" Width="7" Background="{TemplateBinding Background}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.00001*" />
+                            </Grid.RowDefinitions>
+                            <Track x:Name="PART_Track"
+                                   Grid.Row="0"
+                                   IsDirectionReversed="true"
+                                   Focusable="false">
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb"
+                                           Background="{TemplateBinding Foreground}"
+                                           Style="{DynamicResource ScrollBarTrackThumb}" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton x:Name="PageUp"
+                                                  Command="ScrollBar.PageDownCommand"
+                                                  Opacity="0"
+                                                  Focusable="false" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton x:Name="PageDown"
+                                                  Command="ScrollBar.PageUpCommand"
+                                                  Opacity="0"
+                                                  Focusable="false" />
+                                </Track.DecreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Width" Value="Auto" />
+                                <Setter Property="Height" Value="8" />
+                                <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
+                                <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                                <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="ServerPageTitle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="36pt"/>
+            <Setter Property="FontFamily" Value="Roboto"/>
+            <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="Height" Value="70"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="ServerPageSmallText">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12pt"/>
+            <Setter Property="FontFamily" Value="Roboto"/>
+            <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="Margin" Value="300,5,0,0" />
+            <Setter Property="Width" Value="30" />
+        </Style>
+
+        <Style TargetType="Button" x:Key="LogoutButton">
+            <Setter Property="FontFamily" Value="Roboto"/>
+            <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="FontSize" Value="14pt" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Margin" Value="100,0,40,0" />
+            <Setter Property="BorderBrush" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#2f3254" />
+            <Setter Property="Padding" Value="30,0,0,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                Height="{TemplateBinding Height}" 
+                                Width="{TemplateBinding Width}"
+                                BorderThickness="2">
+                            <ContentPresenter Content="Logout" 
+                                              VerticalAlignment="Center" 
+                                              HorizontalAlignment="Right" Margin="0,0,10,0"  />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#99cc33"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>

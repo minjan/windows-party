@@ -1,0 +1,23 @@
+﻿<Window x:Class="VPNClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:rx="http://reactiveui.net"
+        mc:Ignorable="d"
+        Title="Party" 
+        Height="780"
+        Width="1460"  
+        Background="Transparent"
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <Grid UseLayoutRounding="true">
+        <rx:RoutedViewHost 
+            Router="{Binding Router}"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"/>
+    </Grid>
+</Window>
+<!-- Background="Transparent"
+        WindowStyle="None"  AllowsTransparency="true" -->

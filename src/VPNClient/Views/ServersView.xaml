@@ -1,0 +1,99 @@
+﻿<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:ServersViewModel" x:Class="VPNClient.Views.ServersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:reactiveUi="http://reactiveui.net"
+             xmlns:viewModels="clr-namespace:VPNClient.ViewModels"
+             mc:Ignorable="d" d:DesignHeight="780" d:DesignWidth="1460" BorderBrush="#e6e6e6" BorderThickness="1">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="113"></RowDefinition>
+            <RowDefinition Height="667"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#ffffff">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="730"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" HorizontalAlignment="Left">
+                <Image Source="/Assets/Images/logo-blue.png" Height="30px" Margin="50,0,0,0"  />
+            </Grid>
+            <Grid Grid.Column="1" HorizontalAlignment="Right" Width="300">
+                <Image Source="/Assets/Images/ico-logout.png" Height="16px" />
+                <Button Content="Logout" x:Name="Logout" Style="{StaticResource LogoutButton}"></Button>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="730"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Background="#e6e6e6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400"></ColumnDefinition>
+                        <ColumnDefinition Width="330"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0,1,0,1">
+                        <StackPanel Background="#f5f5f5">
+                            <TextBlock Text="SERVER" Style="{StaticResource ListBorderHeaderText}" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="0,1,0,1">
+                        <StackPanel Background="#f5f5f5">
+                            <TextBlock Text="DISTANCE" Style="{StaticResource ListBorderHeaderText}" TextAlignment="Right" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <ListBox Name="ServersListBox" Style="{StaticResource ListBoxStyle}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="500" />
+                                        <ColumnDefinition Width="200" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" Margin="45,0,0,0"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Column="1" HorizontalAlignment="Right">
+                                        <TextBlock Text="{Binding DistanceWithUnits}" Margin="0,0,25,0" />
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Assets/Images/server-list-image.png" Stretch="UniformToFill"></ImageBrush>
+                </Grid.Background>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="350"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid VerticalAlignment="Bottom">
+                    <TextBlock Text=".NET Developer Task" Style="{StaticResource ServerPageTitle}" />
+                </Grid>
+                <Grid Grid.Row="1" VerticalAlignment="Top" Margin="0,5,0,0">
+                    <Label>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="by" Style="{StaticResource ServerPageSmallText}" />
+                            <Image Source="/Assets/Images/logo-white.png" Height="17" />
+                        </StackPanel>
+                    </Label>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</reactiveUi:ReactiveUserControl>
